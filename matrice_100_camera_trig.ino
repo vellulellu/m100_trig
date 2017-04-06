@@ -8,7 +8,7 @@ int pos = 0;    // variable to store the servo position
 int inVal = analogRead(A1);
 int outVal = map(inVal, 0, 1023, 400, 5000);  //set trig. freg. between 2 last values
 unsigned long previousMillis = 0; 
-const long interval = 60000;     //wait this time before starting to photograph
+const long interval = 5000;     //wait this time before starting to photograph
 
 
 void setup() {
@@ -44,6 +44,8 @@ if(currentMillis - previousMillis >= interval) {
     myservo.write(pos);              // tell servo to go to position in variable 'pos'
     delay(30);                       // waits 15ms for the servo to reach the position
   }
+
+
   for (pos = 150; pos >= 100; pos -= 4) { // goes from first end pos to start pos
     myservo.write(pos);              // tell servo to go to position in variable 'pos'
     delay(30);                       // waits 15ms for the servo to reach the position
@@ -57,6 +59,7 @@ else
   
 }
 }
+delay(20);
 }
 
  
