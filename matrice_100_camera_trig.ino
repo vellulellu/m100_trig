@@ -2,49 +2,50 @@
 Servo myservo;  // create servo object to control a servo
 
 int pos = 0;    // variable to store the servo position
-int inVal = analogRead(A1);
-int outVal = map(inVal, 0, 1023, 400, 5000);  //set trig. freg. between 2 last values
+int inVal = analogRead(A2);
+int outVal = map(inVal, 0, 1023, 400, 4000);  //set trig. freg. between 2 last values
 long previousMillis = 0; 
-long interval = 1000; //wait this time before starting to photograph
+long interval = 60000; //wait this time before starting to photograph
 
 
 void setup() {
   myservo.attach(3);  // attaches the servo on pin 3 to the servo object
   pinMode(3, OUTPUT);
-  pinMode(A1, INPUT);
+  pinMode(A2, INPUT);
 }
 
 void loop() {
   
 unsigned long currentMillis = millis();
-
+previousMillis = currentMillis;
   
-if(digitalRead(4) ==LOW)
+while(digitalRead(4) ==LOW)
 {
-  
+  unsigned long currentMillis = millis();
   digitalWrite(13, HIGH);
   myservo.write(90);
 
 if(currentMillis - previousMillis > interval) {
     // save the last time you blinked the LED 
-    previousMillis = currentMillis;   
+    
 
   while(digitalRead(4) == LOW)
 
 {
-  for (pos = 150; pos <= 0; pos += 4) { // first "pos" determines start and second end position. last pos is speed of movement 
-    myservo.write(pos);              // tell servo to go to position in variable 'pos'
-    delay(30);                       // waits 15ms for the servo to reach the position
-  }
-  for (pos = 150; pos >= 100; pos -= 4) { // goes from first end pos to start pos
-    myservo.write(pos);              // tell servo to go to position in variable 'pos'
-    delay(30);                       // waits 15ms for the servo to reach the position
-  }
-  delay(outVal);              //CHANGE THIS NUMBER TO SET PHOTO FREQUENCY IN ms
+  int inVal = analogRead(A2);            
+ int outVal = map(inVal, 0, 1023, 300, 4000);  //set trig. freg. between 2 last values
+  myservo.write(130);
+  
+  delay(outVal);
+
+  myservo.write(90);
+  
+  delay(200);             //delay that the servo stays off the button
 }
 }
 }
-  digitalWrite(13, LOW);
-myservo.write(0);
+  digitalWrite(13, LOW);  //turns the led off
+myservo.write(0);         //turns the servo to "unarmed" state
+
 }
 
